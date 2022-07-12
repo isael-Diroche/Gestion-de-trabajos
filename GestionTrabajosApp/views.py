@@ -71,13 +71,6 @@ def main(request):
 
     fecha = get_date()
 
-    mapping_servicios = {
-        1: "bg_blue",
-        2: "bg_green",
-        3: "bg_red",
-        4: "bg_yellow"
-    }
-
     salida = {
         'fecha': translator.translate(str(fecha), dest="es").text,
         'mensaje': lista,
