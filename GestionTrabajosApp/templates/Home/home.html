@@ -1,0 +1,101 @@
+{% extends "Base/base.html" %}
+
+{% load static %}
+
+{% block content %}
+
+<!-----------------------------------------------------
+                     EN BREGADERA...
+------------------------------------------------------>
+
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    function alertar(){
+        Swal.fire({
+        icon: 'success',
+        title: 'Listo!',
+        text: 'Se ingresaron los datos'
+        })
+    }
+
+    function alert_pagado(){
+        Swal.fire({
+        icon: 'success',
+        title: 'Pagado!',
+        text: 'Todos las las reclamaciones han sido pagadas.'
+        })
+    }
+</script>
+
+<!-- cabezera con el menu de navegacion -->
+<header style="display: flex;">
+    
+    <nav class="nav-menu">
+        <button><img src="{% static 'GestionTrabajos/images/menu.png'%}" alt="Menu"></button>
+        <h1>Gestión de dias Trabajados</h1>
+        <span>Hoy es {{fecha}}</span>
+
+    </nav>
+</header>
+
+<!-- Cuerpo de la pagina -->
+<main>
+    <!-- <form action="/" method="POST">
+        {% csrf_token %}
+        <a onclick="alert_pagado()" name="filtrarHooks" type="submit">Todo pago</a>
+        <input type="submit" value="Todo pagado" name="filtrarHooks" onclick="alert_pagado()" />
+    </form> -->
+    <!-- Contenedor con el registro de informacion y el total -->
+    <div class="contenedor contenedor-registro">
+        <h1>Registra nuevos datos</h1>
+        <div class="sub-contenedor">
+
+            <!-- Contenedor con la vista del total -->
+            <div class="cobrar-total">
+                <h3>Total por cobrar</h3>
+                <span>{{total}}$</span>
+                <img src="{% static 'GestionTrabajos/images/download Graph.png' %}" alt="#">
+            </div>
+
+            <!-- Formulario para ingresar datos -->
+            <form action="/" method="POST">
+                {% csrf_token %}
+                <h3>Tipo de trabajo</h3>
+                {{form.type}}
+                <br>
+                <h3>Comentario</h3>
+                {{form.comment}}
+            
+                <input type="submit" onclick="alertar()" value="Registrar" name="registrar" class="submit-button">
+            </form>
+
+        </div>
+    </div>
+    <!-- Contenedor con los task recientes (todos los tasks de la base de datos) -->
+    <div class="contenedor contenedor-vista">
+        <h1>Recientes</h1>
+        <div class="sub-contenedor">
+            <section class="muestra-recientes">
+               <ul>
+                    {% for salida in salidas %}
+                        <li class="{{color}}">
+                            <span class="dia">{{salida.dia}}</span>
+                            <span class="weekday">{{salida.weekday}}</span>
+                            <span class="fecha">{{salida.mes}} {{salida.year}}</span>
+                            <span class="monto">+{{salida.monto}}$</span>
+                        </li>
+                    {% endfor %}
+                </ul> 
+            </section>
+            
+        </div>
+    </div>
+
+</main>
+
+
+<!-----------------------------------------------------
+                  BREGANDO LO DE ARRIBA
+------------------------------------------------------>
+
+{% endblock %}
