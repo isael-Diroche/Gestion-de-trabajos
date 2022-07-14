@@ -8,3 +8,5 @@ urlpatterns = [
     path('', main, name="Main"),
 
 ]
+
+urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
